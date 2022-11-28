@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: BSD-2-Clause
 
 module tb_dct_t2 ();
 
