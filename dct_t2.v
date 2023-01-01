@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: BSD-2-Clause
+// SPDX-License-Identifier: BSD-2-Clause
 
 module dct_t2 (
 	input wire clk,
