@@ -56,7 +56,7 @@ always @(posedge clk) begin
 		sample_ebr[sample_idx] <= sample;
 		sample_idx <= sample_idx + 9'd1;
 		if (sample_idx[4:0] == 5'h00) begin
-			read_offset_msb[0] <= sample_block_offset[5];
+			read_offset_msb[0] <= sample_block_offset[0];
 		end
 	end
 	if (y_sum) begin
@@ -70,10 +70,12 @@ always @(posedge clk) begin
 			read_offset_msb[0] <= ~read_offset_msb[0];
 			do_old_block <= 1'b0;
 			if (do_old_block) begin
-				if (read_offset_msb[0] != sample_block_offset[5]) begin
+				coef_idx <= coef_idx + 9'd1;
+				if (read_offset_msb[0] != sample_block_offset[0]) begin
 					filtering <= 1'b1;
 				end
 			end else begin
+				coef_idx <= coef_idx + 9'd32;
 				do_old_block <= 1'b1;
 			end
 		end
