@@ -7,6 +7,7 @@ module filterbank (
 	input wire sample_valid,
 	output wire signed [31:0] subband_sample,
 	output wire subband_sample_valid,
+	output wire [4:0] granule_idx, // For testing purposes, remove once done?
 	output wire signed [15:0] windowed_sample_output,
 	output wire wso_valid
 
@@ -60,6 +61,7 @@ assign windowed_sample_output = windowed_sample[30:15];
 assign wso_valid = filtering_r2;
 assign subband_sample = polyphase_acc;
 assign subband_sample_valid = prb_r3;
+assign granule_idx = subband_idxr3;
 
 initial begin
 $readmemh("zero.mem", sample_ebr);
@@ -106,6 +108,9 @@ always @(posedge clk) begin
 	prb_r1 <= polyphase_reset_bubble;
 	prb_r2 <= prb_r1;
 	prb_r3 <= prb_r2;
+	subband_idxr1 <= subband_idx;
+	subband_idxr2 <= subband_idxr1;
+	subband_idxr3 <= subband_idxr2;
 	wwm_r1 <= write_windowed_msb;
 	wwm_r2 <= wwm_r1;
 	wwm_r3 <= wwm_r2;
